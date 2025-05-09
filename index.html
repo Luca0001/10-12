@@ -1,175 +1,85 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#000000">
-  <link rel="manifest" href="manifest.json">
-  <title>10 12 - Selezione Bevande</title>
-  <style>
-    body { font-family: sans-serif; background: #0f0f0f; color: #fff; margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
-    h1, h2 { color: #f2c744; text-align: center; margin-top: 20px; }
-    .step { display: none; flex-grow: 1; justify-content: center; align-items: center; text-align: center; }
-    .step.active { display: flex; }
-    .button { background: #f2c744; color: #000; border: none; padding: 20px; margin: 10px; border-radius: 8px; cursor: pointer; font-size: 24px; width: 80%; max-width: 400px; display: flex; justify-content: center; align-items: center; }
-    .button i { margin-right: 10px; font-size: 32px; }
-    .button-container { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
-    .small-buttons { display: flex; justify-content: space-between; padding: 10px; }
-    .small-buttons .button { width: 48%; font-size: 16px; }
-    .result { background: #1f1f1f; padding: 20px; border-radius: 10px; margin-top: 20px; }
-  </style>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body>
-  <h1>10 12</h1>
-  <h2>Cosa vuoi bere?</h2>
+body {
+  margin: 0;
+  padding: 0;
+  background: #0f0f0f;
+  color: #fff;
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
 
-  <div class="step active" id="step1">
-    <div class="button-container">
-      <button class="button" onclick="next('cocktail')"><i class="fas fa-cocktail"></i>Cocktail</button>
-      <button class="button" onclick="next('birra')"><i class="fas fa-beer"></i>Birra</button>
-    </div>
-  </div>
+.step {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100dvh;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  <div class="step" id="cocktailStep">
-    <h2>Quanto alcol?</h2>
-    <div class="button-container">
-      <button class="button" onclick="cocktailLevel('gentile')"><i class="fas fa-glass-whiskey"></i>Gentile</button>
-      <button class="button" onclick="cocktailLevel('normale')"><i class="fas fa-glass-martini"></i>Normale</button>
-      <button class="button" onclick="cocktailLevel('forte')"><i class="fas fa-glass-cheers"></i>Forte</button>
-    </div>
-  </div>
+.step.active {
+  display: flex;
+}
 
-  <div class="step" id="cocktailTaste">
-    <h2>Che gusto preferisci?</h2>
-    <div id="cocktailTasteButtons" class="button-container"></div>
-  </div>
+h1, h2 {
+  color: #f2c744;
+  text-align: center;
+  margin: 0;
+  padding: 10px;
+  font-size: clamp(20px, 5vw, 28px);
+}
 
-  <div class="step" id="birraStep">
-    <h2>Che tipo?</h2>
-    <div class="button-container">
-      <button class="button" onclick="birraTipo('beverina')"><i class="fas fa-tint"></i>Beverina</button>
-      <button class="button" onclick="birraTipo('complessa')"><i class="fas fa-cogs"></i>Complessa</button>
-    </div>
-  </div>
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+}
 
-  <div class="step" id="birraTaste">
-    <h2>Che sapore cerchi?</h2>
-    <div id="birraTasteButtons" class="button-container"></div>
-  </div>
+.button {
+  background: #f2c744;
+  color: #000;
+  border: none;
+  padding: 20px;
+  margin: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: clamp(16px, 5vw, 24px);
+  width: 90%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  <div class="step" id="result">
-    <h2>Ti consigliamo:</h2>
-    <div class="result" id="resultContent"></div>
-    <div class="small-buttons">
-      <button class="button" onclick="back()">Indietro</button>
-      <button class="button" onclick="reset()">Ricomincia</button>
-    </div>
-  </div>
+.button i {
+  margin-right: 10px;
+  font-size: 24px;
+}
 
-  <script>
-    let choice = {};
+.small-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 400px;
+  padding-bottom: 10px;
+}
 
-    function next(selection) {
-      choice.type = selection;
-      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
-      document.getElementById(selection + 'Step').classList.add('active');
-    }
+.small-buttons .button {
+  width: 48%;
+  font-size: 16px;
+  padding: 12px;
+}
 
-    function cocktailLevel(level) {
-      choice.level = level;
-      document.getElementById('cocktailStep').classList.remove('active');
-      document.getElementById('cocktailTaste').classList.add('active');
-      const tasteDiv = document.getElementById('cocktailTasteButtons');
-      tasteDiv.innerHTML = '';
-      ['Dolce', 'Speziato', 'Amaro', 'Piccante'].forEach(t => {
-        const btn = document.createElement('button');
-        btn.className = 'button';
-        btn.innerHTML = `<i class="fas fa-lemon"></i> ${t}`;
-        btn.onclick = () => showCocktailResults(level, t.toLowerCase());
-        tasteDiv.appendChild(btn);
-      });
-    }
-
-    function birraTipo(tipo) {
-      choice.tipo = tipo;
-      document.getElementById('birraStep').classList.remove('active');
-      document.getElementById('birraTaste').classList.add('active');
-      const tasteDiv = document.getElementById('birraTasteButtons');
-      tasteDiv.innerHTML = '';
-      ['Pane', 'Frutta', 'Erbaceo', 'Amaro'].forEach(t => {
-        const btn = document.createElement('button');
-        btn.className = 'button';
-        btn.innerHTML = `<i class="fas fa-hops"></i> ${t}`;
-        btn.onclick = () => showBirraResults(tipo, t.toLowerCase());
-        tasteDiv.appendChild(btn);
-      });
-    }
-
-    function showCocktailResults(level, taste) {
-      document.getElementById('cocktailTaste').classList.remove('active');
-      document.getElementById('result').classList.add('active');
-      const suggestions = {
-        gentile: {
-          dolce: ['Spritz Hugo', 'Bellini', 'Mimosa'],
-          speziato: ['Ginger Mojito', 'Chai Negroni', 'Spicy Mule'],
-          amaro: ['Vermouth Tonic', 'Bitter Lemon Spritz'],
-          piccante: ['Spicy Ginger Beer', 'Chili Sour']
-        },
-        normale: {
-          dolce: ['Daiquiri', 'Moscow Mule', 'Mai Tai'],
-          speziato: ['Dark & Stormy', 'Basil Smash'],
-          amaro: ['Negroni', 'Americano'],
-          piccante: ['Mezcal Mule', 'Pepper Margarita']
-        },
-        forte: {
-          dolce: ['Zombie', 'Rum Old Fashioned'],
-          speziato: ['Spiced Negroni', 'Chartreuse Smash'],
-          amaro: ['Boulevardier', 'Black Manhattan'],
-          piccante: ['Fire Margarita', 'Tabasco Martini']
-        }
-      };
-      const drinks = suggestions[level][taste];
-      document.getElementById('resultContent').innerHTML = drinks.map(d => `<p>${d}</p>`).join('');
-    }
-
-    function showBirraResults(tipo, taste) {
-      document.getElementById('birraTaste').classList.remove('active');
-      document.getElementById('result').classList.add('active');
-      const suggestions = {
-        beverina: {
-          pane: ['Helles Lager', 'Keller Pils'],
-          frutta: ['Blanche', 'Session IPA'],
-          erbaceo: ['Pilsner', 'Golden Ale'],
-          amaro: ['APA leggera', 'West Coast Light']
-        },
-        complessa: {
-          pane: ['Dubbel Belga', 'Smoked Bock'],
-          frutta: ['Tripel', 'Barley Wine'],
-          erbaceo: ['Saison', 'Farmhouse IPA'],
-          amaro: ['Imperial IPA', 'Black IPA']
-        }
-      };
-      const beers = suggestions[tipo][taste];
-      document.getElementById('resultContent').innerHTML = beers.map(b => `<p>${b}</p>`).join('');
-    }
-
-    function back() {
-      // Get the current active step and go back to the previous one
-      const currentStep = document.querySelector('.step.active');
-      const prevStep = currentStep.previousElementSibling;
-      if (prevStep) {
-        currentStep.classList.remove('active');
-        prevStep.classList.add('active');
-      }
-    }
-
-    function reset() {
-      // Reset the flow back to the initial step
-      choice = {};
-      document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
-      document.getElementById('step1').classList.add('active');
-    }
-  </script>
-</body>
-</html>
+.result {
+  background: #1f1f1f;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+}
