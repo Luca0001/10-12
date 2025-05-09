@@ -11,12 +11,14 @@
     h1, h2 { color: #f2c744; text-align: center; margin-top: 20px; }
     .step { display: none; flex-grow: 1; justify-content: center; align-items: center; text-align: center; }
     .step.active { display: flex; }
-    .button { background: #f2c744; color: #000; border: none; padding: 20px; margin: 10px; border-radius: 8px; cursor: pointer; font-size: 24px; width: 80%; max-width: 400px; }
+    .button { background: #f2c744; color: #000; border: none; padding: 20px; margin: 10px; border-radius: 8px; cursor: pointer; font-size: 24px; width: 80%; max-width: 400px; display: flex; justify-content: center; align-items: center; }
+    .button i { margin-right: 10px; font-size: 32px; }
     .button-container { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
     .small-buttons { display: flex; justify-content: space-between; padding: 10px; }
     .small-buttons .button { width: 48%; font-size: 16px; }
     .result { background: #1f1f1f; padding: 20px; border-radius: 10px; margin-top: 20px; }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <h1>10 12</h1>
@@ -24,17 +26,17 @@
 
   <div class="step active" id="step1">
     <div class="button-container">
-      <button class="button" onclick="next('cocktail')">Cocktail</button>
-      <button class="button" onclick="next('birra')">Birra</button>
+      <button class="button" onclick="next('cocktail')"><i class="fas fa-cocktail"></i>Cocktail</button>
+      <button class="button" onclick="next('birra')"><i class="fas fa-beer"></i>Birra</button>
     </div>
   </div>
 
   <div class="step" id="cocktailStep">
     <h2>Quanto alcol?</h2>
     <div class="button-container">
-      <button class="button" onclick="cocktailLevel('gentile')">Gentile</button>
-      <button class="button" onclick="cocktailLevel('normale')">Normale</button>
-      <button class="button" onclick="cocktailLevel('forte')">Forte</button>
+      <button class="button" onclick="cocktailLevel('gentile')"><i class="fas fa-glass-whiskey"></i>Gentile</button>
+      <button class="button" onclick="cocktailLevel('normale')"><i class="fas fa-glass-martini"></i>Normale</button>
+      <button class="button" onclick="cocktailLevel('forte')"><i class="fas fa-glass-cheers"></i>Forte</button>
     </div>
   </div>
 
@@ -46,8 +48,8 @@
   <div class="step" id="birraStep">
     <h2>Che tipo?</h2>
     <div class="button-container">
-      <button class="button" onclick="birraTipo('beverina')">Beverina</button>
-      <button class="button" onclick="birraTipo('complessa')">Complessa</button>
+      <button class="button" onclick="birraTipo('beverina')"><i class="fas fa-tint"></i>Beverina</button>
+      <button class="button" onclick="birraTipo('complessa')"><i class="fas fa-cogs"></i>Complessa</button>
     </div>
   </div>
 
@@ -84,7 +86,7 @@
       ['Dolce', 'Speziato', 'Amaro', 'Piccante'].forEach(t => {
         const btn = document.createElement('button');
         btn.className = 'button';
-        btn.innerText = t;
+        btn.innerHTML = `<i class="fas fa-lemon"></i> ${t}`;
         btn.onclick = () => showCocktailResults(level, t.toLowerCase());
         tasteDiv.appendChild(btn);
       });
@@ -99,7 +101,7 @@
       ['Pane', 'Frutta', 'Erbaceo', 'Amaro'].forEach(t => {
         const btn = document.createElement('button');
         btn.className = 'button';
-        btn.innerText = t;
+        btn.innerHTML = `<i class="fas fa-hops"></i> ${t}`;
         btn.onclick = () => showBirraResults(tipo, t.toLowerCase());
         tasteDiv.appendChild(btn);
       });
