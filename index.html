@@ -1,85 +1,168 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: #0f0f0f;
-  color: #fff;
-  font-family: sans-serif;
-  display: flex;
-  flex-direction: column;
-  height: 100dvh;
-  overflow: hidden;
-}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 12 - Scegli la tua bevanda</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+      overflow: hidden;
+    }
 
-.step {
-  display: none;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100dvh;
-  padding: 20px;
-  box-sizing: border-box;
-}
+    .step {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      height: 100dvh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-.step.active {
-  display: flex;
-}
+    .step.active {
+      display: flex;
+    }
 
-h1, h2 {
-  color: #f2c744;
-  text-align: center;
-  margin: 0;
-  padding: 10px;
-  font-size: clamp(20px, 5vw, 28px);
-}
+    h1, h2 {
+      color: #f2c744;
+      text-align: center;
+      margin: 0;
+      padding: 10px;
+      font-size: clamp(20px, 5vw, 28px);
+    }
 
-.button-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  width: 100%;
-}
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      flex-grow: 1;
+      width: 100%;
+    }
 
-.button {
-  background: #f2c744;
-  color: #000;
-  border: none;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: clamp(16px, 5vw, 24px);
-  width: 90%;
-  max-width: 400px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .button {
+      background: #f2c744;
+      color: #000;
+      border: none;
+      padding: 20px;
+      margin: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: clamp(16px, 5vw, 24px);
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-.button i {
-  margin-right: 10px;
-  font-size: 24px;
-}
+    .button i {
+      margin-right: 10px;
+      font-size: 24px;
+    }
 
-.small-buttons {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 400px;
-  padding-bottom: 10px;
-}
+    .small-buttons {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 400px;
+      padding-bottom: 10px;
+    }
 
-.small-buttons .button {
-  width: 48%;
-  font-size: 16px;
-  padding: 12px;
-}
+    .small-buttons .button {
+      width: 48%;
+      font-size: 16px;
+      padding: 12px;
+    }
 
-.result {
-  background: #1f1f1f;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  text-align: center;
-}
+    .result {
+      background: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="step active" id="step1">
+    <div class="button-container">
+      <h1>Preferisci cocktail o birra?</h1>
+      <button class="button" onclick="nextStep('step2')"><i class="fa-solid fa-martini-glass"></i>Cocktail</button>
+      <button class="button" onclick="nextStep('step3')"><i class="fa-solid fa-beer-mug-empty"></i>Birra</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
+  <div class="step" id="step2">
+    <div class="button-container">
+      <h1>Quanto alcolico?</h1>
+      <button class="button" onclick="nextStep('step2a')">Gentile</button>
+      <button class="button" onclick="nextStep('step2b')">Normale</button>
+      <button class="button" onclick="nextStep('step2c')">Forte</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
+  <div class="step" id="step3">
+    <div class="button-container">
+      <h1>Che tipo di birra?</h1>
+      <button class="button" onclick="nextStep('step3a')">Beverina</button>
+      <button class="button" onclick="nextStep('step3b')">Complessa</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
+  <!-- altri step... -->
+
+  <div class="step" id="result">
+    <div class="button-container">
+      <h2>Ti consigliamo:</h2>
+      <div class="result" id="resultContent"></div>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
+  <script>
+    let historyStack = [];
+
+    function nextStep(id) {
+      const current = document.querySelector('.step.active');
+      current.classList.remove('active');
+      historyStack.push(current.id);
+      document.getElementById(id).classList.add('active');
+    }
+
+    function back() {
+      const current = document.querySelector('.step.active');
+      current.classList.remove('active');
+      const prevId = historyStack.pop();
+      if (prevId) document.getElementById(prevId).classList.add('active');
+    }
+
+    function reset() {
+      document.querySelector('.step.active').classList.remove('active');
+      historyStack = [];
+      document.getElementById('step1').classList.add('active');
+    }
+  </script>
+</body>
+</html>
