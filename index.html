@@ -86,7 +86,6 @@
       background: #1f1f1f;
       padding: 20px;
       border-radius: 10px;
-      margin-bottom: 10px;
       text-align: center;
     }
   </style>
@@ -116,6 +115,42 @@
     </div>
   </div>
 
+  <div class="step" id="step2a">
+    <div class="button-container">
+      <h1>Che gusto?</h1>
+      <button class="button" onclick="showResult(['Spritz – fresco e agrumato', 'Americano – leggero e bitter', 'Hugo – dolce e floreale'])">Dolce</button>
+      <button class="button" onclick="showResult(['Cucumber Cooler – delicato e vegetale', 'Moscow Mule – zenzero e lime'])">Speziato</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
+  <div class="step" id="step2b">
+    <div class="button-container">
+      <h1>Che gusto?</h1>
+      <button class="button" onclick="showResult(['Negroni – deciso e aromatico', 'Daiquiri – secco e agrumato', 'Paloma – agrumi e tequila'])">Amaro</button>
+      <button class="button" onclick="showResult(['Mai Tai – tropicale e fruttato', 'Caipirinha – fresco e lime'])">Fruttato</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
+  <div class="step" id="step2c">
+    <div class="button-container">
+      <h1>Che gusto?</h1>
+      <button class="button" onclick="showResult(['Old Fashioned – forte e bilanciato', 'Boulevardier – intenso e amaricante'])">Amaro</button>
+      <button class="button" onclick="showResult(['Zombie – alcolico e tropicale', 'Jungle Bird – rum e bitter'])">Esotico</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
   <div class="step" id="step3">
     <div class="button-container">
       <h1>Che tipo di birra?</h1>
@@ -128,7 +163,29 @@
     </div>
   </div>
 
-  <!-- altri step... -->
+  <div class="step" id="step3a">
+    <div class="button-container">
+      <h1>Che sapore cerchi?</h1>
+      <button class="button" onclick="showResult(['Pils – leggera e secca', 'Blanche – agrumata e fresca'])">Agrumato</button>
+      <button class="button" onclick="showResult(['Lager – facile e rinfrescante', 'Kölsch – pulita e snella'])">Pane</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
+
+  <div class="step" id="step3b">
+    <div class="button-container">
+      <h1>Che sapore cerchi?</h1>
+      <button class="button" onclick="showResult(['IPA – amara e resinosa', 'Double IPA – intensa e alcolica'])">Amaro</button>
+      <button class="button" onclick="showResult(['Dubbel – caramello e frutta secca', 'Stout – tostata e cremosa'])">Ricco</button>
+    </div>
+    <div class="small-buttons">
+      <button class="button" onclick="back()">Indietro</button>
+      <button class="button" onclick="reset()">Ricomincia</button>
+    </div>
+  </div>
 
   <div class="step" id="result">
     <div class="button-container">
@@ -162,6 +219,17 @@
       document.querySelector('.step.active').classList.remove('active');
       historyStack = [];
       document.getElementById('step1').classList.add('active');
+    }
+
+    function showResult(bevande) {
+      const container = document.getElementById('resultContent');
+      container.innerHTML = '';
+      bevande.forEach(item => {
+        const el = document.createElement('div');
+        el.textContent = item;
+        container.appendChild(el);
+      });
+      nextStep('result');
     }
   </script>
 </body>
