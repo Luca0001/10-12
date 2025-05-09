@@ -22,6 +22,7 @@
   <div class="step active" id="step1">
     <button class="button" onclick="next('cocktail')">Cocktail</button>
     <button class="button" onclick="next('birra')">Birra</button>
+    <button class="button" onclick="reset()">Ricomincia</button>
   </div>
 
   <div class="step" id="cocktailStep">
@@ -29,27 +30,36 @@
     <button class="button" onclick="cocktailLevel('gentile')">Gentile</button>
     <button class="button" onclick="cocktailLevel('normale')">Normale</button>
     <button class="button" onclick="cocktailLevel('forte')">Forte</button>
+    <button class="button" onclick="back('step1')">Indietro</button>
+    <button class="button" onclick="reset()">Ricomincia</button>
   </div>
 
   <div class="step" id="cocktailTaste">
     <h2>Che gusto preferisci?</h2>
     <div id="cocktailTasteButtons"></div>
+    <button class="button" onclick="back('cocktailStep')">Indietro</button>
+    <button class="button" onclick="reset()">Ricomincia</button>
   </div>
 
   <div class="step" id="birraStep">
     <h2>Che tipo?</h2>
     <button class="button" onclick="birraTipo('beverina')">Beverina</button>
     <button class="button" onclick="birraTipo('complessa')">Complessa</button>
+    <button class="button" onclick="back('step1')">Indietro</button>
+    <button class="button" onclick="reset()">Ricomincia</button>
   </div>
 
   <div class="step" id="birraTaste">
     <h2>Che sapore cerchi?</h2>
     <div id="birraTasteButtons"></div>
+    <button class="button" onclick="back('birraStep')">Indietro</button>
+    <button class="button" onclick="reset()">Ricomincia</button>
   </div>
 
   <div class="step" id="result">
     <h2>Ti consigliamo:</h2>
     <div class="result" id="resultContent"></div>
+    <button class="button" onclick="reset()">Ricomincia</button>
   </div>
 
   <script>
@@ -137,6 +147,17 @@
       };
       const beers = suggestions[tipo][taste];
       document.getElementById('resultContent').innerHTML = beers.map(b => `<p>${b}</p>`).join('');
+    }
+
+    function back(step) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById(step).classList.add('active');
+    }
+
+    function reset() {
+      document.getElementById('result').classList.remove('active');
+      document.getElementById('step1').classList.add('active');
+      choice = {};
     }
   </script>
 </body>
