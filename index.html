@@ -7,11 +7,14 @@
   <link rel="manifest" href="manifest.json">
   <title>10 12 - Selezione Bevande</title>
   <style>
-    body { font-family: sans-serif; background: #0f0f0f; color: #fff; margin: 0; padding: 20px; }
-    h1, h2 { color: #f2c744; }
-    .step { display: none; margin-top: 40px; }
-    .step.active { display: block; }
-    .button { background: #f2c744; color: #000; border: none; padding: 10px 20px; margin: 10px 0; border-radius: 8px; cursor: pointer; font-size: 16px; }
+    body { font-family: sans-serif; background: #0f0f0f; color: #fff; margin: 0; padding: 0; height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+    h1, h2 { color: #f2c744; text-align: center; margin-top: 20px; }
+    .step { display: none; flex-grow: 1; justify-content: center; align-items: center; text-align: center; }
+    .step.active { display: flex; }
+    .button { background: #f2c744; color: #000; border: none; padding: 20px; margin: 10px; border-radius: 8px; cursor: pointer; font-size: 24px; width: 80%; max-width: 400px; }
+    .button-container { display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
+    .small-buttons { display: flex; justify-content: space-between; padding: 10px; }
+    .small-buttons .button { width: 48%; font-size: 16px; }
     .result { background: #1f1f1f; padding: 20px; border-radius: 10px; margin-top: 20px; }
   </style>
 </head>
@@ -20,45 +23,46 @@
   <h2>Cosa vuoi bere?</h2>
 
   <div class="step active" id="step1">
-    <button class="button" onclick="next('cocktail')">Cocktail</button>
-    <button class="button" onclick="next('birra')">Birra</button>
-    <button class="button" onclick="reset()">Ricomincia</button>
+    <div class="button-container">
+      <button class="button" onclick="next('cocktail')">Cocktail</button>
+      <button class="button" onclick="next('birra')">Birra</button>
+    </div>
   </div>
 
   <div class="step" id="cocktailStep">
     <h2>Quanto alcol?</h2>
-    <button class="button" onclick="cocktailLevel('gentile')">Gentile</button>
-    <button class="button" onclick="cocktailLevel('normale')">Normale</button>
-    <button class="button" onclick="cocktailLevel('forte')">Forte</button>
-    <button class="button" onclick="back('step1')">Indietro</button>
-    <button class="button" onclick="reset()">Ricomincia</button>
+    <div class="button-container">
+      <button class="button" onclick="cocktailLevel('gentile')">Gentile</button>
+      <button class="button" onclick="cocktailLevel('normale')">Normale</button>
+      <button class="button" onclick="cocktailLevel('forte')">Forte</button>
+    </div>
   </div>
 
   <div class="step" id="cocktailTaste">
     <h2>Che gusto preferisci?</h2>
-    <div id="cocktailTasteButtons"></div>
-    <button class="button" onclick="back('cocktailStep')">Indietro</button>
-    <button class="button" onclick="reset()">Ricomincia</button>
+    <div id="cocktailTasteButtons" class="button-container"></div>
   </div>
 
   <div class="step" id="birraStep">
     <h2>Che tipo?</h2>
-    <button class="button" onclick="birraTipo('beverina')">Beverina</button>
-    <button class="button" onclick="birraTipo('complessa')">Complessa</button>
-    <button class="button" onclick="back('step1')">Indietro</button>
-    <button class="button" onclick="reset()">Ricomincia</button>
+    <div class="button-container">
+      <button class="button" onclick="birraTipo('beverina')">Beverina</button>
+      <button class="button" onclick="birraTipo('complessa')">Complessa</button>
+    </div>
   </div>
 
   <div class="step" id="birraTaste">
     <h2>Che sapore cerchi?</h2>
-    <div id="birraTasteButtons"></div>
-    <button class="button" onclick="back('birraStep')">Indietro</button>
-    <button class="button" onclick="reset()">Ricomincia</button>
+    <div id="birraTasteButtons" class="button-container"></div>
   </div>
 
   <div class="step" id="result">
     <h2>Ti consigliamo:</h2>
     <div class="result" id="resultContent"></div>
+  </div>
+
+  <div class="small-buttons">
+    <button class="button" onclick="back('step1')">Indietro</button>
     <button class="button" onclick="reset()">Ricomincia</button>
   </div>
 
